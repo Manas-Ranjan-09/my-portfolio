@@ -171,23 +171,6 @@ export default function ScrollBackground() {
 
   return (
     <>
-      {/* Cinematic Loader Screen */}
-      {!isLoaded && (
-        <div className="fixed inset-0 bg-[#0a0a0c] z-[9999] flex flex-col justify-center items-center">
-          <div className="w-[320px] text-center flex flex-col items-center">
-            <div className="w-[50px] h-[50px] border-3 border-white/5 border-t-[var(--brand-gold)] rounded-full animate-spin mb-6 shadow-[0_0_15px_rgba(197,168,128,0.4)]" style={{ borderWidth: '3px' }}></div>
-            <div className="text-sm font-semibold tracking-[0.15em] text-[#f3f4f6] uppercase mb-3">LOADING SYSTEM</div>
-            <div className="w-full h-[3px] bg-white/5 rounded-full overflow-hidden mb-2">
-              <div 
-                className="h-full bg-gradient-to-r from-[var(--brand-gold)] to-[#cca374] shadow-[0_0_8px_rgba(197,168,128,0.4)] transition-all duration-100 ease-out"
-                style={{ width: `${progress}%` }}
-              ></div>
-            </div>
-            <div className="text-xs text-[#9ca3af] font-light">{progress}%</div>
-          </div>
-        </div>
-      )}
-
       {/* Canvas scroll container */}
       <div className="fixed inset-0 w-screen h-screen overflow-hidden flex justify-center items-center bg-[#0a0a0c] z-1 pointer-events-none">
         <canvas 
