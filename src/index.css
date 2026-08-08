@@ -178,3 +178,45 @@ body, nav, a, p, h1, h2, h3, h4, h5, h6, span, button, svg, div {
               box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1),
               text-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+/* Cinematic Landing Page Styles */
+@keyframes sweep-effect {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.light-sweep-name {
+  background: linear-gradient(
+    90deg,
+    #ffffff 20%,
+    #ffffff 35%,
+    #c5a880 50%,
+    #ffffff 65%,
+    #ffffff 80%
+  );
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: sweep-effect 8s linear infinite;
+  text-shadow: 0 0 30px rgba(197, 168, 128, 0.15);
+}
+
+.glow-line {
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--brand-gold) 50%, transparent 100%);
+  box-shadow: 0 0 10px var(--brand-gold-glow), 0 0 20px var(--brand-gold-glow);
+}
+
+.glow-button {
+  box-shadow: 0 0 15px rgba(197, 168, 128, 0.2);
+}
+
+.glow-button:hover {
+  box-shadow: 0 0 25px rgba(197, 168, 128, 0.45);
+}
+
