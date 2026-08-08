@@ -1,6 +1,42 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { GraduationCap, Calendar, MapPin, CheckCircle } from 'lucide-react';
+import { GraduationCap, Calendar, MapPin, Award } from 'lucide-react';
+
+const educationData = [
+  {
+    id: 1,
+    school: "Maharaja Sriram Chandra Bhanja Deo University",
+    degree: "MASTER OF COMPUTER APPLICATIONS",
+    duration: "2023 -- 2025",
+    location: "Baripada, Odisha",
+    grade: "CGPA: 8.26",
+    badge: "MCA Graduate",
+    coursework: [
+      "Object-Oriented Programming (Python, Java)",
+      "Relational Databases (MySQL, PostgreSQL)",
+      "Web Technologies & Frontend Scripting",
+      "Data Structures & Algorithmic Analysis",
+      "Software Engineering & SDLC Methodologies",
+      "Computer Networks & Security Principles"
+    ]
+  },
+  {
+    id: 2,
+    school: "Bhadrak Autonomous College",
+    degree: "BACHELOR OF COMPUTER APPLICATIONS",
+    duration: "2023 - 2025",
+    location: "Bhadrak, Odisha",
+    grade: "CGPA: 8.18",
+    badge: "BCA Graduate",
+    coursework: [
+      "Computer Programming & Core Languages",
+      "Database Systems & Relational Schemas",
+      "Web Design Technologies",
+      "Software Engineering Concepts",
+      "Data Communication & Networking"
+    ]
+  }
+];
 
 export default function Education() {
   return (
@@ -25,89 +61,74 @@ export default function Education() {
         </div>
 
         {/* Education glass container layout */}
-        <div className="max-w-3xl mx-auto">
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="glass-card rounded-2xl p-8 md:p-12 hover:shadow-[0_15px_45px_rgba(0,0,0,0.5)] transition-all relative overflow-hidden"
-          >
-            {/* Grid overlay background graphic */}
-            <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#c5a880_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
+        <div className="max-w-4xl mx-auto flex flex-col gap-8">
+          {educationData.map((edu, idx) => (
+            <motion.div 
+              key={edu.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: idx * 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="glass-card rounded-2xl p-8 md:p-10 hover:shadow-[0_15px_45px_rgba(0,0,0,0.5)] transition-all relative overflow-hidden"
+            >
+              {/* Grid overlay background graphic */}
+              <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#c5a880_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
 
-            {/* Content header */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 pb-8 border-b border-white/5 relative z-10">
-              <div className="flex items-center gap-4">
-                <div className="p-4 bg-white/5 border border-white/10 rounded-2xl text-[var(--brand-gold)] flex items-center justify-center">
-                  <GraduationCap size={32} />
-                </div>
-                <div>
-                  <div className="text-xs font-bold tracking-widest text-[var(--brand-gold)] uppercase mb-1">
-                    MSCB University
+              {/* Content header */}
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-6 pb-6 border-b border-white/5 relative z-10">
+                <div className="flex items-center gap-4">
+                  <div className="p-3.5 bg-white/5 border border-white/10 rounded-2xl text-[var(--brand-gold)] flex items-center justify-center flex-shrink-0">
+                    <GraduationCap size={28} />
                   </div>
-                  <h3 className="text-lg md:text-2xl font-extrabold text-white tracking-wide">
-                    MASTER OF COMPUTER APPLICATIONS
-                  </h3>
+                  <div>
+                    <div className="text-xs font-bold tracking-widest text-[var(--brand-gold)] uppercase mb-1">
+                      {edu.school}
+                    </div>
+                    <h3 className="text-base md:text-xl font-extrabold text-white tracking-wide uppercase">
+                      {edu.degree}
+                    </h3>
+                  </div>
+                </div>
+
+                {/* Tag marker */}
+                <span className="self-start md:self-auto px-4 py-1.5 rounded-full border border-[var(--brand-gold)]/20 bg-[var(--brand-gold)]/5 text-[var(--brand-gold)] text-xs uppercase tracking-widest font-semibold whitespace-nowrap">
+                  {edu.badge}
+                </span>
+              </div>
+
+              {/* Content body details */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6 relative z-10 text-xs md:text-sm font-light text-[#9ca3af]">
+                <div className="flex items-center gap-2">
+                  <Calendar size={14} className="text-[var(--brand-gold)]" />
+                  <span>{edu.duration}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <MapPin size={14} className="text-[var(--brand-gold)]" />
+                  <span>{edu.location}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Award size={14} className="text-[var(--brand-gold)]" />
+                  <span className="font-semibold text-white">{edu.grade}</span>
                 </div>
               </div>
 
-              {/* Tag marker */}
-              <span className="self-start md:self-auto px-4 py-1.5 rounded-full border border-[var(--brand-gold)]/20 bg-[var(--brand-gold)]/5 text-[var(--brand-gold)] text-xs uppercase tracking-widest font-semibold">
-                MCA Graduate
-              </span>
-            </div>
-
-            {/* Content body details */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 relative z-10 text-sm font-light text-[#9ca3af]">
-              <div className="flex items-center gap-2">
-                <Calendar size={16} className="text-[var(--brand-gold)]" />
-                <span>Graduated</span>
+              {/* Bullet achievements */}
+              <div className="relative z-10">
+                <h4 className="text-[10px] font-bold tracking-widest text-white uppercase mb-3">
+                  Core Subjects & Study Areas:
+                </h4>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#9ca3af] font-light">
+                  {edu.coursework.map((course, cIdx) => (
+                    <li key={cIdx} className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 bg-[var(--brand-gold)] rounded-full flex-shrink-0"></span>
+                      <span>{course}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <div className="flex items-center gap-2">
-                <MapPin size={16} className="text-[var(--brand-gold)]" />
-                <span>Baripada, Odisha</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle size={16} className="text-[var(--brand-gold)]" />
-                <span>Full Time MCA Degree</span>
-              </div>
-            </div>
 
-            {/* Bullet achievements */}
-            <div className="relative z-10">
-              <h4 className="text-xs font-bold tracking-widest text-white uppercase mb-4">
-                Key Curriculum & Coursework:
-              </h4>
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs md:text-sm text-[#9ca3af] font-light">
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-[var(--brand-gold)] rounded-full"></span>
-                  <span>Object-Oriented Programming (Python, Java)</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-[var(--brand-gold)] rounded-full"></span>
-                  <span>Relational Databases (MySQL, PostgreSQL)</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-[var(--brand-gold)] rounded-full"></span>
-                  <span>Web Technologies & Frontend Scripting</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-[var(--brand-gold)] rounded-full"></span>
-                  <span>Data Structures & Algorithmic Analysis</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-[var(--brand-gold)] rounded-full"></span>
-                  <span>Software Engineering & SDLC Methodologies</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-[var(--brand-gold)] rounded-full"></span>
-                  <span>Computer Networks & Security Principles</span>
-                </li>
-              </ul>
-            </div>
-
-          </motion.div>
+            </motion.div>
+          ))}
         </div>
 
       </div>

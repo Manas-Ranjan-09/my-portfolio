@@ -85,7 +85,8 @@ export default function Hero() {
               VIEW PROJECTS
             </motion.a>
             <motion.a
-              href="#"
+              href="/resume.pdf"
+              download="Manas_Ranjan_Sahoo_Resume.pdf"
               whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.06)" }}
               whileTap={{ scale: 0.95 }}
               className="w-full sm:w-auto px-6 md:px-8 py-3.5 border border-white/20 hover:border-[var(--brand-gold)] text-white font-semibold text-xs uppercase tracking-widest rounded-full bg-transparent transition-all duration-300 text-center whitespace-nowrap"

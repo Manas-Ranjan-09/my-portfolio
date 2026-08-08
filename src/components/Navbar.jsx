@@ -104,9 +104,8 @@ export default function Navbar() {
               <Linkedin size={18} />
             </motion.a>
             <motion.a
-              href="#"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/resume.pdf"
+              download="Manas_Ranjan_Sahoo_Resume.pdf"
               whileHover={{ scale: 1.05, boxShadow: "0 0 15px rgba(var(--text-accent-rgb), 0.25)" }}
               whileTap={{ scale: 0.95 }}
               className="flex items-center gap-2 border border-[var(--brand-gold)]/30 hover:border-[var(--brand-gold)] bg-[var(--brand-gold)]/5 hover:bg-[var(--brand-gold)]/10 text-[var(--brand-gold)] rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-wider transition-all"
@@ -165,7 +164,8 @@ export default function Navbar() {
                     <Linkedin size={20} />
                   </a>
                   <a
-                    href="#"
+                    href="/resume.pdf"
+                    download="Manas_Ranjan_Sahoo_Resume.pdf"
                     className="flex items-center gap-2 border border-[var(--brand-gold)] hover:border-[var(--brand-gold)] bg-[var(--brand-gold)]/10 text-[var(--brand-gold)] rounded-full px-5 py-2 text-xs font-semibold uppercase tracking-wider transition-all"
                   >
                     <FileText size={16} />

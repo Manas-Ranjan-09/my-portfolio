@@ -7,17 +7,27 @@ const experiences = [
     id: 1,
     role: "SOFTWARE ENGINEER TRAINEE",
     company: "Inovvantage",
-    duration: "2 Months",
+    duration: "Dec 2025 - Jan 2026",
     location: "Bhubaneswar, India",
-    desc: "Assisted in writing clean, documented code for backend systems and web portals. Gained hands-on experience in testing API routing endpoints, integrating relational tables, and participating in code refactoring to improve overall system speed and reliability."
+    desc: [
+      "Assisted in developing and maintaining web applications using Python, Django, HTML, CSS, and JavaScript.",
+      "Collaborated with the development team to debug issues, test features, and improve application performance.",
+      "Worked on frontend and backend tasks, including database integration and API handling.",
+      "Gained hands-on experience in software development lifecycle, version control, and team collaboration."
+    ]
   },
   {
     id: 2,
     role: "PYTHON DEVELOPER INTERN",
     company: "Cognifyz Technologies",
-    duration: "1 Month",
+    duration: "Oct 2025 – Nov 2025",
     location: "Remote, India",
-    desc: "Collaborated on designing Python scripts for programmatic execution. Integrated databases and developed basic microservices using Flask/Django frameworks. Automated data queries, handled parsing pipelines, and conducted functional tests."
+    desc: [
+      "Designed multi-section front end with advanced form validation and dynamic DOM updates.",
+      "Implemented secure signup/login, password hashing, protected routes, and API CRUD operations.",
+      "Integrated MongoDB and environment configuration using .env.",
+      "Added UI animations and automatic redirect to login after account creation."
+    ]
   }
 ];
 
@@ -119,10 +129,12 @@ export default function Experience() {
                       </div>
                     </div>
 
-                    {/* Description paragraph */}
-                    <p className="text-xs text-[#9ca3af] font-light leading-relaxed">
-                      {exp.desc}
-                    </p>
+                    {/* Description bullet list */}
+                    <ul className="text-xs text-[#9ca3af] font-light leading-relaxed space-y-2 list-disc pl-4 text-left">
+                      {exp.desc.map((bullet, idx) => (
+                        <li key={idx}>{bullet}</li>
+                      ))}
+                    </ul>
 
                   </div>
                 </motion.div>
