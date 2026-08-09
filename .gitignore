@@ -1,0 +1,21 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependencies
+node_modules/
+
+# Production output
+dist/
+
+# Local env files
+.env
+.env.local
+.env.*.local
+
+# IDEs
+.idea/
+.vscode/
+*.suo
+*.sw?

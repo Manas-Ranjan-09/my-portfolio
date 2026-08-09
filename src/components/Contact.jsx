@@ -1,29 +1,76 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Mail, Phone, Linkedin, Github, Send, MessageSquare } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Mail, Phone, Linkedin, Github, Send, MessageSquare, Loader2 } from 'lucide-react';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    subject: '',
     message: ''
   });
+  const [status, setStatus] = useState('idle'); // 'idle' | 'sending' | 'success' | 'error'
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const { name, email, message } = formData;
+    setStatus('sending');
 
-    // Construct mailto link
-    const subject = encodeURIComponent(`Portfolio Message from ${name}`);
-    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
-    const mailtoUrl = `mailto:manasranjansahoo1227@gmail.com?subject=${subject}&body=${body}`;
+    try {
+      const payload = {
+        access_key: import.meta.env.VITE_WEB3FORMS_ACCESS_KEY,
+        name: formData.name,
+        email: formData.email,
+        subject: `New Portfolio Contact — ${formData.name}`,
+        Subject: formData.subject || 'No Subject Provided',
+        message: formData.message,
+        from_name: formData.name,
+      };
 
-    window.location.href = mailtoUrl;
+      // Check honeypot field
+      const botcheck = e.target.querySelector('input[name="botcheck"]');
+      if (botcheck && botcheck.checked) {
+        // Simple honeypot detection
+        setStatus('error');
+        return;
+      }
+
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setStatus('success');
+        setFormData({
+          name: '',
+          email: '',
+          subject: '',
+          message: ''
+        });
+        e.target.reset();
+
+        // Auto-hide success notification after 5 seconds
+        setTimeout(() => {
+          setStatus('idle');
+        }, 5000);
+      } else {
+        setStatus('error');
+      }
+    } catch (error) {
+      console.error('Error submitting Contact form:', error);
+      setStatus('error');
+    }
   };
 
   return (
@@ -139,10 +186,18 @@ export default function Contact() {
 
               <div className="flex flex-col gap-6">
 
+                {/* Honeypot Botcheck */}
+                <input
+                  type="checkbox"
+                  name="botcheck"
+                  className="hidden"
+                  style={{ display: 'none' }}
+                />
+
                 {/* Name */}
                 <div className="flex flex-col gap-2">
                   <label htmlFor="name" className="text-[10px] uppercase tracking-widest text-[#9ca3af] font-semibold">
-                    Your Name
+                    Full Name
                   </label>
                   <input
                     type="text"
@@ -151,15 +206,15 @@ export default function Contact() {
                     required
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full bg-white/3 border border-white/10 rounded-xl px-4 py-3.5 text-xs text-white focus:outline-none focus:border-[var(--brand-gold)] transition-colors"
-                    placeholder="Enter your name"
+                    className="w-full bg-white/3 border border-white/10 rounded-xl px-4 py-3.5 text-xs text-[var(--brand-gold)] focus:outline-none focus:border-[var(--brand-gold)] transition-colors"
+                    placeholder="Your name"
                   />
                 </div>
 
                 {/* Email */}
                 <div className="flex flex-col gap-2">
                   <label htmlFor="email" className="text-[10px] uppercase tracking-widest text-[#9ca3af] font-semibold">
-                    Email Address
+                    Email
                   </label>
                   <input
                     type="email"
@@ -168,15 +223,31 @@ export default function Contact() {
                     required
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full bg-white/3 border border-white/10 rounded-xl px-4 py-3.5 text-xs text-white focus:outline-none focus:border-[var(--brand-gold)] transition-colors"
-                    placeholder="Enter your email address"
+                    className="w-full bg-white/3 border border-white/10 rounded-xl px-4 py-3.5 text-xs text-[var(--brand-gold)] focus:outline-none focus:border-[var(--brand-gold)] transition-colors"
+                    placeholder="your@email.com"
+                  />
+                </div>
+
+                {/* Subject */}
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="subject" className="text-[10px] uppercase tracking-widest text-[#9ca3af] font-semibold">
+                    Subject
+                  </label>
+                  <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    className="w-full bg-white/3 border border-white/10 rounded-xl px-4 py-3.5 text-xs text-[var(--brand-gold)] focus:outline-none focus:border-[var(--brand-gold)] transition-colors"
+                    placeholder="Job opportunity"
                   />
                 </div>
 
                 {/* Message */}
                 <div className="flex flex-col gap-2">
                   <label htmlFor="message" className="text-[10px] uppercase tracking-widest text-[#9ca3af] font-semibold">
-                    Your Message
+                    Message
                   </label>
                   <textarea
                     id="message"
@@ -185,8 +256,8 @@ export default function Contact() {
                     rows={4}
                     value={formData.message}
                     onChange={handleChange}
-                    className="w-full bg-white/3 border border-white/10 rounded-xl px-4 py-3.5 text-xs text-white focus:outline-none focus:border-[var(--brand-gold)] transition-colors resize-none"
-                    placeholder="Write your message details..."
+                    className="w-full bg-white/3 border border-white/10 rounded-xl px-4 py-3.5 text-xs text-[var(--brand-gold)] focus:outline-none focus:border-[var(--brand-gold)] transition-colors resize-none"
+                    placeholder="Write your message..."
                   ></textarea>
                 </div>
 
@@ -195,13 +266,64 @@ export default function Contact() {
               {/* Submit CTA */}
               <motion.button
                 type="submit"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full mt-6 py-4 bg-gradient-to-r from-[var(--brand-gold)] to-[#cca374] text-black font-semibold text-xs uppercase tracking-widest rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(197,168,128,0.2)] flex items-center justify-center gap-2 cursor-pointer"
+                disabled={status === 'sending'}
+                whileHover={status === 'sending' ? {} : { scale: 1.02 }}
+                whileTap={status === 'sending' ? {} : { scale: 0.98 }}
+                className="w-full mt-6 py-4 bg-gradient-to-r from-[var(--brand-gold)] to-[#cca374] text-black font-semibold text-xs uppercase tracking-widest rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(197,168,128,0.2)] flex items-center justify-center gap-2 cursor-pointer disabled:cursor-not-allowed disabled:opacity-70"
               >
-                <Send size={12} />
-                <span>SEND MESSAGE</span>
+                {status === 'sending' ? (
+                  <>
+                    <Loader2 size={12} className="animate-spin" />
+                    <span>SENDING...</span>
+                  </>
+                ) : (
+                  <>
+                    <Send size={12} />
+                    <span>SEND MESSAGE &rarr;</span>
+                  </>
+                )}
               </motion.button>
+
+              {/* Status Notifications */}
+              <AnimatePresence>
+                {status === 'success' && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0, y: 10 }}
+                    animate={{ opacity: 1, height: 'auto', y: 0 }}
+                    exit={{ opacity: 0, height: 0, y: -10 }}
+                    transition={{ duration: 0.3, ease: 'easeInOut' }}
+                    className="overflow-hidden w-full"
+                  >
+                    <div className="mt-4 p-4 rounded-xl border border-emerald-500/30 bg-emerald-950/20 text-center shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+                      <div className="text-emerald-400 font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-1.5">
+                        <span>MESSAGE SENT</span>
+                        <span className="text-sm font-sans font-bold">✓</span>
+                      </div>
+                      <p className="mt-2 text-[11px] text-[#9ca3af] font-light leading-relaxed">
+                        Thank you! Your message has been sent successfully. I'll get back to you as soon as possible.
+                      </p>
+                    </div>
+                  </motion.div>
+                )}
+                {status === 'error' && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0, y: 10 }}
+                    animate={{ opacity: 1, height: 'auto', y: 0 }}
+                    exit={{ opacity: 0, height: 0, y: -10 }}
+                    transition={{ duration: 0.3, ease: 'easeInOut' }}
+                    className="overflow-hidden w-full"
+                  >
+                    <div className="mt-4 p-4 rounded-xl border border-red-500/30 bg-red-950/20 text-center shadow-[0_0_20px_rgba(239,68,68,0.2)]">
+                      <div className="text-red-400 font-bold text-xs uppercase tracking-widest">
+                        MESSAGE FAILED
+                      </div>
+                      <p className="mt-2 text-[11px] text-[#9ca3af] font-light leading-relaxed">
+                        Something went wrong while sending your message. Please try again or contact me directly by email.
+                      </p>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
             </form>
           </motion.div>
