@@ -33,8 +33,8 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 w-full z-[100] px-4 md:px-8 py-4 transition-all duration-300 pointer-events-auto">
-        <div className={`max-w-8xl mx-auto flex items-center justify-between px-6 py-3 rounded-full transition-all duration-300 ${scrolled
+      <nav className="fixed top-0 left-0 w-full z-[100] px-2 sm:px-4 md:px-8 py-3 sm:py-4 transition-all duration-300 pointer-events-auto">
+        <div className={`max-w-8xl mx-auto flex items-center justify-between px-4 sm:px-6 py-2.5 sm:py-3 rounded-full transition-all duration-300 ${scrolled
           ? 'glass-panel border-white/10 bg-[#0a0a0c]/80 backdrop-blur-md shadow-lg shadow-black/30'
           : 'border border-transparent bg-transparent'
           }`}>
@@ -42,18 +42,18 @@ export default function Navbar() {
           <motion.a
             href="#home"
             whileHover={{ scale: 1.02 }}
-            className="flex items-center gap-3 text-sm md:text-base font-bold tracking-[0.15em] text-[#f3f4f6] hover:text-[var(--brand-gold)] transition-colors"
+            className="flex items-center gap-2 sm:gap-3 text-[10px] min-[375px]:text-xs sm:text-sm md:text-base font-bold tracking-[0.05em] sm:tracking-[0.15em] text-[#f3f4f6] hover:text-[var(--brand-gold)] transition-colors"
           >
             <img 
               src="/logo.jpg" 
               alt="Logo" 
-              className="w-8 h-8 md:w-9 md:h-9 rounded-full object-cover border border-[var(--brand-gold)]/30 shadow-[0_0_10px_rgba(197,168,128,0.25)]"
+              className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-full object-cover border border-[var(--brand-gold)]/30 shadow-[0_0_10px_rgba(197,168,128,0.25)]"
             />
             <span className="whitespace-nowrap">𝕄𝔸ℕ𝔸𝕊 ℝ𝔸ℕ𝕁𝔸ℕ 𝕊𝔸ℍ𝕆𝕆</span>
           </motion.a>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-2 relative">
+          <div className="hidden xl:flex items-center gap-2 relative">
             {navLinks.map((link, idx) => (
               <a
                 key={link.name}
@@ -82,7 +82,7 @@ export default function Navbar() {
           </div>
 
           {/* Right Side Social / CTA Links */}
-          <div className="hidden lg:flex items-center gap-4">
+          <div className="hidden xl:flex items-center gap-4">
             <motion.a
               href="https://github.com/Manas-Ranjan-09"
               target="_blank"
@@ -118,7 +118,7 @@ export default function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden text-[#f3f4f6] hover:text-[var(--brand-gold)] transition-colors p-1"
+            className="xl:hidden text-[#f3f4f6] hover:text-[var(--brand-gold)] transition-colors p-1"
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -132,7 +132,7 @@ export default function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3, ease: 'easeInOut' }}
-              className="absolute top-20 left-4 right-4 glass-panel border-white/10 bg-[#0a0a0c]/95 backdrop-blur-lg rounded-3xl p-6 shadow-xl lg:hidden"
+              className="absolute top-20 left-4 right-4 glass-panel border-white/10 bg-[#0a0a0c]/95 backdrop-blur-lg rounded-3xl p-6 shadow-xl xl:hidden"
             >
               <div className="flex flex-col gap-4 text-center">
                 {navLinks.map((link) => (

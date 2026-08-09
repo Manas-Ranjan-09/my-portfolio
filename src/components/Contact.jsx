@@ -65,6 +65,7 @@ export default function Contact() {
           setStatus('idle');
         }, 5000);
       } else {
+        console.error('Web3Forms Submission Failed:', result);
         setStatus('error');
       }
     } catch (error) {
