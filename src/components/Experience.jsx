@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Briefcase, Calendar, MapPin } from 'lucide-react';
 
 const experiences = [
@@ -32,6 +32,7 @@ const experiences = [
 ];
 
 export default function Experience() {
+  const shouldReduceMotion = useReducedMotion();
   const containerVariants = {
     hidden: {},
     visible: {
@@ -42,7 +43,7 @@ export default function Experience() {
   const cardVariants = (isLeft) => ({
     hidden: { 
       opacity: 0, 
-      x: isLeft ? -50 : 50 
+      x: shouldReduceMotion ? 0 : (isLeft ? -15 : 15) 
     },
     visible: {
       opacity: 1,
@@ -54,18 +55,18 @@ export default function Experience() {
   return (
     <section 
       id="experience" 
-      className="relative min-h-screen py-24 px-6 md:px-12 max-w-7xl mx-auto flex flex-col justify-center items-center"
+      className="relative min-h-screen py-16 sm:py-24 max-w-[1400px] mx-auto px-4 sm:px-6 md:px-10 xl:px-16 flex flex-col justify-center items-center"
     >
       <div className="w-full relative z-10">
         
         {/* Section Title */}
-        <div className="flex flex-col items-center mb-20 text-center">
+        <div className="flex flex-col items-center mb-12 sm:mb-16 text-center">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-3xl md:text-5xl font-extrabold tracking-widest uppercase text-white"
+            className="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-widest uppercase text-white"
           >
             EXPERIENCE
           </motion.h2>
@@ -91,16 +92,16 @@ export default function Experience() {
                 }`}
               >
                 {/* Visual Connector dot */}
-                <div className="absolute left-[20px] md:left-1/2 w-4 h-4 bg-black border-2 border-[var(--brand-gold)] rounded-full z-10 transform -translate-x-[7px] md:-translate-x-2 shadow-[0_0_10px_rgba(197,168,128,0.6)]"></div>
+                <div className="absolute left-[16px] md:left-1/2 w-4 h-4 bg-black border-2 border-[var(--brand-gold)] rounded-full z-10 transform -translate-x-[7px] md:-translate-x-2 shadow-[0_0_10px_rgba(197,168,128,0.6)]"></div>
 
                 {/* Timeline Card */}
                 <motion.div 
                   variants={cardVariants(isLeft)}
-                  className={`w-full md:w-[45%] pl-10 md:pl-0 ${
+                  className={`w-full md:w-[45%] pl-8 md:pl-0 ${
                     isLeft ? 'md:text-right' : 'md:text-left'
                   }`}
                 >
-                  <div className="glass-card rounded-2xl p-6 relative hover:shadow-[0_10px_35px_rgba(0,0,0,0.4)]">
+                  <div className="glass-card rounded-2xl p-4 sm:p-6 relative hover:shadow-[0_10px_35px_rgba(0,0,0,0.4)]">
                     
                     {/* Role */}
                     <h3 className="text-base md:text-lg font-bold tracking-wide text-white mb-2">

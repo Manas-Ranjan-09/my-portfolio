@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { GraduationCap, Calendar, MapPin, Award } from 'lucide-react';
 
 const educationData = [
@@ -39,21 +39,22 @@ const educationData = [
 ];
 
 export default function Education() {
+  const shouldReduceMotion = useReducedMotion();
   return (
     <section 
       id="education" 
-      className="relative min-h-screen py-24 px-6 md:px-12 max-w-7xl mx-auto flex flex-col justify-center items-center"
+      className="relative min-h-screen py-16 sm:py-24 max-w-[1400px] mx-auto px-4 sm:px-6 md:px-10 xl:px-16 flex flex-col justify-center items-center"
     >
       <div className="w-full relative z-10">
         
         {/* Section Title */}
-        <div className="flex flex-col items-center mb-16 text-center">
+        <div className="flex flex-col items-center mb-12 sm:mb-16 text-center">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-3xl md:text-5xl font-extrabold tracking-widest uppercase text-white"
+            className="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-widest uppercase text-white"
           >
             EDUCATION
           </motion.h2>
@@ -65,11 +66,11 @@ export default function Education() {
           {educationData.map((edu, idx) => (
             <motion.div 
               key={edu.id}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: idx * 0.15, ease: [0.16, 1, 0.3, 1] }}
-              className="glass-card rounded-2xl p-8 md:p-10 hover:shadow-[0_15px_45px_rgba(0,0,0,0.5)] transition-all relative overflow-hidden"
+              className="glass-card rounded-2xl p-4 sm:p-8 md:p-10 hover:shadow-[0_15px_45px_rgba(0,0,0,0.5)] transition-all relative overflow-hidden"
             >
               {/* Grid overlay background graphic */}
               <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#c5a880_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
@@ -77,8 +78,8 @@ export default function Education() {
               {/* Content header */}
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-6 pb-6 border-b border-white/5 relative z-10">
                 <div className="flex items-center gap-4">
-                  <div className="p-3.5 bg-white/5 border border-white/10 rounded-2xl text-[var(--brand-gold)] flex items-center justify-center flex-shrink-0">
-                    <GraduationCap size={28} />
+                  <div className="p-2.5 sm:p-3.5 bg-white/5 border border-white/10 rounded-xl sm:rounded-2xl text-[var(--brand-gold)] flex items-center justify-center flex-shrink-0">
+                    <GraduationCap className="w-5 h-5 sm:w-7 sm:h-7" />
                   </div>
                   <div>
                     <div className="text-xs font-bold tracking-widest text-[var(--brand-gold)] uppercase mb-1">

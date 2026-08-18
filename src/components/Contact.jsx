@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Mail, Phone, Linkedin, Github, Send, MessageSquare, Loader2 } from 'lucide-react';
 
 export default function Contact() {
+  const shouldReduceMotion = useReducedMotion();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -77,18 +78,18 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="relative min-h-screen py-24 px-6 md:px-12 max-w-7xl mx-auto flex flex-col justify-center items-center"
+      className="relative min-h-screen py-16 sm:py-24 max-w-[1400px] mx-auto px-4 sm:px-6 md:px-10 xl:px-16 flex flex-col justify-center items-center"
     >
       <div className="w-full relative z-10">
 
         {/* Section Title */}
-        <div className="flex flex-col items-center mb-16 text-center">
+        <div className="flex flex-col items-center mb-12 sm:mb-16 text-center">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-3xl md:text-5xl font-extrabold tracking-widest uppercase text-white"
+            className="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-widest uppercase text-white"
           >
             CONTACT
           </motion.h2>
@@ -100,14 +101,14 @@ export default function Contact() {
 
           {/* Info Card side */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: shouldReduceMotion ? 0 : -15 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
             className="glass-card rounded-3xl p-8 md:p-10 flex flex-col justify-between"
           >
             <div>
-              <h3 className="text-xl md:text-2xl font-extrabold text-white tracking-wide uppercase mb-4">
+              <h3 className="text-[clamp(1.15rem,2.2vw,1.5rem)] font-extrabold text-white tracking-wide uppercase mb-4 leading-snug">
                 LET'S BUILD SOMETHING TOGETHER
               </h3>
               <p className="text-xs md:text-sm text-[#9ca3af] font-light leading-relaxed mb-8">
@@ -177,7 +178,7 @@ export default function Contact() {
 
           {/* Form side */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: shouldReduceMotion ? 0 : 15 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
@@ -207,7 +208,7 @@ export default function Contact() {
                     required
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full bg-white/3 border border-white/10 rounded-xl px-4 py-3.5 text-xs text-[var(--brand-gold)] focus:outline-none focus:border-[var(--brand-gold)] transition-colors"
+                    className="w-full bg-white/3 border border-white/10 rounded-xl px-4 min-h-[50px] text-xs text-[var(--brand-gold)] focus:outline-none focus:border-[var(--brand-gold)] transition-colors"
                     placeholder="Your name"
                   />
                 </div>
@@ -224,7 +225,7 @@ export default function Contact() {
                     required
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full bg-white/3 border border-white/10 rounded-xl px-4 py-3.5 text-xs text-[var(--brand-gold)] focus:outline-none focus:border-[var(--brand-gold)] transition-colors"
+                    className="w-full bg-white/3 border border-white/10 rounded-xl px-4 min-h-[50px] text-xs text-[var(--brand-gold)] focus:outline-none focus:border-[var(--brand-gold)] transition-colors"
                     placeholder="your@email.com"
                   />
                 </div>
@@ -240,7 +241,7 @@ export default function Contact() {
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
-                    className="w-full bg-white/3 border border-white/10 rounded-xl px-4 py-3.5 text-xs text-[var(--brand-gold)] focus:outline-none focus:border-[var(--brand-gold)] transition-colors"
+                    className="w-full bg-white/3 border border-white/10 rounded-xl px-4 min-h-[50px] text-xs text-[var(--brand-gold)] focus:outline-none focus:border-[var(--brand-gold)] transition-colors"
                     placeholder="Job opportunity"
                   />
                 </div>
@@ -257,7 +258,7 @@ export default function Contact() {
                     rows={4}
                     value={formData.message}
                     onChange={handleChange}
-                    className="w-full bg-white/3 border border-white/10 rounded-xl px-4 py-3.5 text-xs text-[var(--brand-gold)] focus:outline-none focus:border-[var(--brand-gold)] transition-colors resize-none"
+                    className="w-full bg-white/3 border border-white/10 rounded-xl p-4 text-xs text-[var(--brand-gold)] focus:outline-none focus:border-[var(--brand-gold)] transition-colors resize-none min-h-[120px]"
                     placeholder="Write your message..."
                   ></textarea>
                 </div>
@@ -270,7 +271,7 @@ export default function Contact() {
                 disabled={status === 'sending'}
                 whileHover={status === 'sending' ? {} : { scale: 1.02 }}
                 whileTap={status === 'sending' ? {} : { scale: 0.98 }}
-                className="w-full mt-6 py-4 bg-gradient-to-r from-[var(--brand-gold)] to-[#cca374] text-black font-semibold text-xs uppercase tracking-widest rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(197,168,128,0.2)] flex items-center justify-center gap-2 cursor-pointer disabled:cursor-not-allowed disabled:opacity-70"
+                className="w-full mt-6 min-h-[52px] bg-gradient-to-r from-[var(--brand-gold)] to-[#cca374] text-black font-semibold text-xs uppercase tracking-widest rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(197,168,128,0.2)] flex items-center justify-center gap-2 cursor-pointer disabled:cursor-not-allowed disabled:opacity-70"
               >
                 {status === 'sending' ? (
                   <>

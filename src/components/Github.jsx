@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Github, Folder, FolderGit2, CalendarRange, Languages } from 'lucide-react';
 
 const gitStats = [
@@ -10,20 +10,21 @@ const gitStats = [
 ];
 
 export default function GithubSection() {
+  const shouldReduceMotion = useReducedMotion();
   return (
     <section 
       id="github" 
-      className="relative min-h-[80vh] py-24 px-6 md:px-12 max-w-7xl mx-auto flex flex-col justify-center items-center"
+      className="relative min-h-[80vh] py-16 sm:py-24 max-w-[1400px] mx-auto px-4 sm:px-6 md:px-10 xl:px-16 flex flex-col justify-center items-center"
     >
       <div className="w-full relative z-10 max-w-4xl mx-auto">
         
         {/* Section Card Layout */}
         <motion.div 
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="glass-card rounded-3xl p-8 md:p-12 text-center relative overflow-hidden"
+          className="glass-card rounded-3xl p-6 sm:p-8 md:p-12 text-center relative overflow-hidden"
         >
           {/* Subtle grid background */}
           <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#c5a880_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none"></div>
@@ -34,7 +35,7 @@ export default function GithubSection() {
           </div>
 
           {/* Heading */}
-          <h3 className="text-xl md:text-3xl font-extrabold tracking-widest text-white uppercase mb-4">
+          <h3 className="text-[clamp(1.25rem,3.2vw,2.25rem)] font-extrabold tracking-widest text-white uppercase mb-4 leading-tight">
             CODE. BUILD. LEARN. REPEAT.
           </h3>
 
@@ -44,10 +45,10 @@ export default function GithubSection() {
           </p>
 
           {/* Grid Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10 text-left">
+          <div className="grid grid-cols-1 min-[480px]:grid-cols-2 md:grid-cols-4 gap-4 mb-10 text-left">
             {gitStats.map((stat, idx) => (
               <div key={idx} className="p-4 rounded-2xl bg-white/3 border border-white/5 flex items-center gap-3">
-                <div className="p-2 bg-white/5 rounded-lg">
+                <div className="p-2 bg-white/5 rounded-lg flex-shrink-0">
                   {stat.icon}
                 </div>
                 <div>
@@ -69,7 +70,7 @@ export default function GithubSection() {
             rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center gap-2.5 px-8 py-3.5 bg-white text-black font-semibold text-xs uppercase tracking-widest rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:bg-[#e5e7eb] hover:shadow-[0_0_30px_rgba(255,255,255,0.25)]"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-white text-black font-semibold text-xs uppercase tracking-widest rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:bg-[#e5e7eb] hover:shadow-[0_0_30px_rgba(255,255,255,0.25)] min-h-[48px] cursor-pointer"
           >
             <Github size={14} />
             <span>VISIT GITHUB</span>

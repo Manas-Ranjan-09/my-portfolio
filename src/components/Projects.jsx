@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Github, ExternalLink, Code } from 'lucide-react';
 import { projectsData } from '../data/projects';
 
-function ProjectCard({ project, index }) {
+function ProjectCard({ project, index, shouldReduceMotion }) {
   const pad = (num) => ('00' + num).slice(-2);
 
   return (
     <motion.div 
       layout
-      initial={{ opacity: 0, scale: 0.9 }}
+      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.9 }}
+      exit={{ opacity: 0, scale: shouldReduceMotion ? 1 : 0.95 }}
       transition={{ duration: 0.5 }}
       className="glass-card rounded-2xl overflow-hidden flex flex-col justify-between h-full group"
     >
       {/* Card Header visual with Project Image */}
-      <div className="relative h-48 border-b border-white/5 overflow-hidden flex items-center justify-center">
+      <div className="relative aspect-video w-full border-b border-white/5 overflow-hidden flex items-center justify-center">
         {/* Background Image with cover scale */}
         <img 
           src={project.image} 
@@ -66,14 +66,16 @@ function ProjectCard({ project, index }) {
               href={project.github} 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-white hover:text-[var(--brand-gold)] transition-colors py-1.5 px-3 border border-white/10 rounded-lg hover:border-[var(--brand-gold)]/50 bg-white/5"
+              className="flex-1 flex items-center justify-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-white hover:text-[var(--brand-gold)] transition-colors py-2 px-3 border border-white/10 rounded-lg hover:border-[var(--brand-gold)]/50 bg-white/5 min-h-[44px]"
             >
               <Github size={14} />
               <span>Code</span>
             </a>
             <a 
               href={project.demo} 
-              className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-black bg-gradient-to-r from-[var(--brand-gold)] to-[#cca374] hover:opacity-90 transition-all py-1.5 px-3.5 rounded-lg shadow-md shadow-[var(--brand-gold)]/10"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 flex items-center justify-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-black bg-gradient-to-r from-[var(--brand-gold)] to-[#cca374] hover:opacity-90 transition-all py-2 px-3.5 rounded-lg shadow-md shadow-[var(--brand-gold)]/10 min-h-[44px]"
             >
               <ExternalLink size={14} />
               <span>Demo</span>
@@ -87,6 +89,7 @@ function ProjectCard({ project, index }) {
 
 export default function Projects() {
   const [activeFilter, setActiveFilter] = useState('ALL');
+  const shouldReduceMotion = useReducedMotion();
   const filters = ['ALL', 'PYTHON', 'DJANGO', 'JAVASCRIPT', 'REACT'];
 
   // Frontend filter matches project categories
@@ -97,18 +100,18 @@ export default function Projects() {
   return (
     <section 
       id="projects" 
-      className="relative min-h-screen py-24 px-6 md:px-12 max-w-7xl mx-auto flex flex-col justify-center items-center"
+      className="relative min-h-screen py-16 sm:py-24 max-w-[1400px] mx-auto px-4 sm:px-6 md:px-10 xl:px-16 flex flex-col justify-center items-center"
     >
       <div className="w-full relative z-10">
         
         {/* Section Title */}
-        <div className="flex flex-col items-center mb-16 text-center">
+        <div className="flex flex-col items-center mb-12 sm:mb-16 text-center">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-3xl md:text-5xl font-extrabold tracking-widest uppercase text-white"
+            className="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-widest uppercase text-white"
           >
             PROJECTS
           </motion.h2>
@@ -116,12 +119,12 @@ export default function Projects() {
         </div>
 
         {/* Filter Navigation Buttons */}
-        <div className="flex flex-wrap justify-center items-center gap-2 mb-12">
+        <div className="flex overflow-x-auto no-scrollbar justify-start sm:justify-center items-center gap-2 mb-8 sm:mb-12 w-[calc(100%+2rem)] sm:w-full -mx-4 sm:mx-0 px-4 sm:px-0 pb-3 sm:pb-0 scroll-smooth whitespace-nowrap">
           {filters.map((filter) => (
             <button
               key={filter}
               onClick={() => setActiveFilter(filter)}
-              className={`px-4 py-1.5 sm:px-6 sm:py-2 rounded-full text-[10px] sm:text-xs font-semibold uppercase tracking-widest border transition-all duration-300 ${
+              className={`px-4 py-2 sm:px-6 sm:py-2 rounded-full text-[10px] sm:text-xs font-semibold uppercase tracking-widest border transition-all duration-300 min-h-[40px] sm:min-h-0 flex-shrink-0 ${
                 activeFilter === filter
                   ? 'border-[var(--brand-gold)] bg-gradient-to-r from-[var(--brand-gold)] to-[#cca374] text-black shadow-lg shadow-[var(--brand-gold)]/15'
                   : 'border-white/10 hover:border-[var(--brand-gold)]/50 text-[#9ca3af] hover:text-white bg-transparent'
@@ -143,6 +146,7 @@ export default function Projects() {
                 key={project.id} 
                 project={project} 
                 index={index}
+                shouldReduceMotion={shouldReduceMotion}
               />
             ))}
           </AnimatePresence>

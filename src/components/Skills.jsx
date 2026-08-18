@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { 
   Code, 
   Terminal, 
@@ -65,20 +65,21 @@ function SkillCard({ name, desc, icon }) {
   return (
     <motion.div 
       whileHover={{ y: -5 }}
-      className="glass-card rounded-xl p-5 flex items-start gap-4 transition-all duration-300"
+      className="glass-card rounded-xl p-3.5 sm:p-5 flex flex-col sm:flex-row items-start gap-3 sm:gap-4 transition-all duration-300 h-full"
     >
-      <div className="p-3 bg-white/5 border border-white/10 rounded-lg flex-shrink-0 flex items-center justify-center">
+      <div className="p-2 sm:p-3 bg-white/5 border border-white/10 rounded-lg flex-shrink-0 flex items-center justify-center">
         {icon}
       </div>
       <div>
         <h4 className="text-sm font-semibold tracking-wide text-white mb-1">{name}</h4>
-        <p className="text-xs text-[#9ca3af] font-light leading-relaxed">{desc}</p>
+        <p className="text-[11px] sm:text-xs text-[#9ca3af] font-light leading-relaxed">{desc}</p>
       </div>
     </motion.div>
   );
 }
 
 export default function Skills() {
+  const shouldReduceMotion = useReducedMotion();
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -88,7 +89,7 @@ export default function Skills() {
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 15 },
     visible: {
       opacity: 1,
       y: 0,
@@ -99,18 +100,18 @@ export default function Skills() {
   return (
     <section 
       id="skills" 
-      className="relative min-h-screen py-24 px-6 md:px-12 max-w-7xl mx-auto flex flex-col justify-center items-center"
+      className="relative min-h-screen py-16 sm:py-24 max-w-[1400px] mx-auto px-4 sm:px-6 md:px-10 xl:px-16 flex flex-col justify-center items-center"
     >
       <div className="w-full relative z-10">
         
         {/* Section Title */}
-        <div className="flex flex-col items-center mb-16 text-center">
+        <div className="flex flex-col items-center mb-12 sm:mb-16 text-center">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-3xl md:text-5xl font-extrabold tracking-widest uppercase text-white"
+            className="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-widest uppercase text-white"
           >
             TECH STACK
           </motion.h2>
@@ -137,7 +138,7 @@ export default function Skills() {
               </h3>
               
               {/* Skill Cards Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 min-[375px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {category.skills.map((skill) => (
                   <SkillCard 
                     key={skill.name} 

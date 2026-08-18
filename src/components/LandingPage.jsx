@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 
 export default function LandingPage({ onEnter }) {
   const [isExiting, setIsExiting] = useState(false);
   const [showSweep, setShowSweep] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   // Trigger the light sweep class after name animation completes (~2.5s)
   useEffect(() => {
@@ -23,7 +24,7 @@ export default function LandingPage({ onEnter }) {
 
   // Logo Animation
   const logoVariants = {
-    hidden: { opacity: 0, y: 20, filter: 'blur(8px)' },
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 10, filter: shouldReduceMotion ? 'none' : 'blur(4px)' },
     visible: {
       opacity: 1,
       y: 0,
@@ -32,15 +33,15 @@ export default function LandingPage({ onEnter }) {
     },
     exit: {
       opacity: 0,
-      y: -20,
-      filter: 'blur(8px)',
+      y: shouldReduceMotion ? 0 : -10,
+      filter: shouldReduceMotion ? 'none' : 'blur(4px)',
       transition: { duration: 0.6, ease: 'easeInOut' }
     }
   };
 
   // Welcome Text Animation
   const welcomeVariants = {
-    hidden: { opacity: 0, y: 15, filter: 'blur(6px)', letterSpacing: '0.35em' },
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 8, filter: shouldReduceMotion ? 'none' : 'blur(3px)', letterSpacing: '0.35em' },
     visible: {
       opacity: 1,
       y: 0,
@@ -50,15 +51,15 @@ export default function LandingPage({ onEnter }) {
     },
     exit: {
       opacity: 0,
-      y: -15,
-      filter: 'blur(6px)',
+      y: shouldReduceMotion ? 0 : -8,
+      filter: shouldReduceMotion ? 'none' : 'blur(3px)',
       transition: { duration: 0.6, ease: 'easeInOut' }
     }
   };
 
   // Main Name Word-by-Word Animation
   const wordVariants = {
-    hidden: { opacity: 0, y: 30, filter: 'blur(10px)' },
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 15, filter: shouldReduceMotion ? 'none' : 'blur(5px)' },
     visible: (i) => ({
       opacity: 1,
       y: 0,
@@ -67,15 +68,15 @@ export default function LandingPage({ onEnter }) {
     }),
     exit: {
       opacity: 0,
-      y: -20,
-      filter: 'blur(8px)',
+      y: shouldReduceMotion ? 0 : -10,
+      filter: shouldReduceMotion ? 'none' : 'blur(4px)',
       transition: { duration: 0.6, ease: 'easeInOut' }
     }
   };
 
   // Title Animation (Left-to-Right reveal)
   const titleVariants = {
-    hidden: { opacity: 0, x: -15, filter: 'blur(8px)', clipPath: 'inset(0 100% 0 0)' },
+    hidden: { opacity: 0, x: shouldReduceMotion ? 0 : -8, filter: shouldReduceMotion ? 'none' : 'blur(4px)', clipPath: 'inset(0 100% 0 0)' },
     visible: {
       opacity: 1,
       x: 0,
@@ -85,7 +86,7 @@ export default function LandingPage({ onEnter }) {
     },
     exit: {
       opacity: 0,
-      filter: 'blur(6px)',
+      filter: shouldReduceMotion ? 'none' : 'blur(3px)',
       transition: { duration: 0.6, ease: 'easeInOut' }
     }
   };
@@ -107,7 +108,7 @@ export default function LandingPage({ onEnter }) {
 
   // Description Animation
   const descVariants = {
-    hidden: { opacity: 0, y: 15, filter: 'blur(6px)' },
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 8, filter: shouldReduceMotion ? 'none' : 'blur(3px)' },
     visible: {
       opacity: 1,
       y: 0,
@@ -116,15 +117,15 @@ export default function LandingPage({ onEnter }) {
     },
     exit: {
       opacity: 0,
-      y: -10,
-      filter: 'blur(4px)',
+      y: shouldReduceMotion ? 0 : -8,
+      filter: shouldReduceMotion ? 'none' : 'blur(3px)',
       transition: { duration: 0.6, ease: 'easeInOut' }
     }
   };
 
   // CTA Button Animation
   const buttonVariants = {
-    hidden: { opacity: 0, scale: 0.85, y: 20 },
+    hidden: { opacity: 0, scale: shouldReduceMotion ? 1 : 0.9, y: shouldReduceMotion ? 0 : 10 },
     visible: {
       opacity: 1,
       scale: 1,
@@ -138,8 +139,8 @@ export default function LandingPage({ onEnter }) {
     },
     exit: {
       opacity: 0,
-      scale: 0.9,
-      y: 10,
+      scale: shouldReduceMotion ? 1 : 0.95,
+      y: shouldReduceMotion ? 0 : 5,
       transition: { duration: 0.5, ease: 'easeInOut' }
     }
   };
@@ -170,14 +171,14 @@ export default function LandingPage({ onEnter }) {
       </div>
 
       {/* Main Content Layout Container */}
-      <div className="relative z-10 flex flex-col items-center justify-center text-center max-w-4xl px-6 pointer-events-auto">
+      <div className="relative z-10 flex flex-col items-center justify-center text-center max-w-4xl px-4 sm:px-6 pointer-events-auto py-8">
         
         {/* 1. Logo */}
         <motion.div
           variants={logoVariants}
           initial="hidden"
           animate={isExiting ? "exit" : "visible"}
-          className="text-xs md:text-sm font-bold tracking-[0.25em] text-[var(--brand-gold)] uppercase mb-6"
+          className="text-xs md:text-sm font-bold tracking-[0.25em] text-[var(--brand-gold)] uppercase mb-3 sm:mb-6"
         >
           MANAS
         </motion.div>
@@ -187,13 +188,13 @@ export default function LandingPage({ onEnter }) {
           variants={welcomeVariants}
           initial="hidden"
           animate={isExiting ? "exit" : "visible"}
-          className="text-[10px] md:text-xs font-semibold text-[#9ca3af] uppercase mb-4"
+          className="text-[9px] md:text-xs font-semibold text-[#9ca3af] uppercase mb-2 sm:mb-4"
         >
           WELCOME TO MY DIGITAL SPACE
         </motion.div>
 
         {/* 3. Main Name */}
-        <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-wide uppercase leading-none mb-6 flex gap-x-4 flex-wrap justify-center">
+        <h1 className="text-3xl sm:text-5xl md:text-7xl font-extrabold tracking-wide uppercase leading-none mb-4 sm:mb-6 flex gap-x-2 sm:gap-x-4 flex-wrap justify-center">
           {words.map((word, index) => (
             <motion.span
               key={index}
@@ -203,10 +204,10 @@ export default function LandingPage({ onEnter }) {
               animate={isExiting ? "exit" : "visible"}
               className={`${
                 showSweep && !isExiting 
-                  ? 'light-sweep-name' 
-                  : index === 2 
-                    ? 'text-transparent bg-clip-text bg-gradient-to-r from-[var(--brand-gold)] via-[#cca374] to-[#f3f4f6]' 
-                    : 'text-white'
+                ? 'light-sweep-name' 
+                : index === 2 
+                  ? 'text-transparent bg-clip-text bg-gradient-to-r from-[var(--brand-gold)] via-[#cca374] to-[#f3f4f6]' 
+                  : 'text-white'
               }`}
             >
               {word}
@@ -215,12 +216,12 @@ export default function LandingPage({ onEnter }) {
         </h1>
 
         {/* 4. Developer Title & Glow Line */}
-        <div className="flex flex-col items-center mb-8 w-fit relative">
+        <div className="flex flex-col items-center mb-6 sm:mb-8 w-fit relative">
           <motion.h3
             variants={titleVariants}
             initial="hidden"
             animate={isExiting ? "exit" : "visible"}
-            className="text-xs sm:text-sm md:text-base font-semibold tracking-[0.2em] text-[var(--brand-gold)] uppercase pb-2 whitespace-nowrap"
+            className="text-[9px] min-[375px]:text-[11px] sm:text-xs md:text-sm font-semibold tracking-[0.1em] sm:tracking-[0.2em] text-[var(--brand-gold)] uppercase pb-2"
           >
             FULL STACK PYTHON DEVELOPER
           </motion.h3>
@@ -237,7 +238,7 @@ export default function LandingPage({ onEnter }) {
           variants={descVariants}
           initial="hidden"
           animate={isExiting ? "exit" : "visible"}
-          className="text-xs sm:text-sm text-[#9ca3af] max-w-xl font-light leading-relaxed mb-12"
+          className="text-xs sm:text-sm text-[#9ca3af] max-w-xl font-light leading-relaxed mb-6 sm:mb-12"
         >
           Building modern, responsive and interactive web experiences with Python, Django and modern frontend technologies.
         </motion.p>

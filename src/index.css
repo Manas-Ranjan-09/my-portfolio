@@ -7,6 +7,8 @@
     --bg-color: #0a0a0c;
     --brand-gold: #c5a880;
     --brand-gold-glow: rgba(197, 168, 128, 0.35);
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
 
     /* Default Theme (Dark Mode) Variables */
     --text-primary: #f3f4f6;
@@ -39,6 +41,7 @@
 
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: clamp(80px, 10vh, 100px);
   }
 
   body {
@@ -130,7 +133,7 @@
 
 @media (max-width: 768px) {
   .timeline-line::after {
-    left: 20px;
+    left: 16px;
     transform: none;
   }
 }
@@ -218,5 +221,14 @@ body, nav, a, p, h1, h2, h3, h4, h5, h6, span, button, svg, div {
 
 .glow-button:hover {
   box-shadow: 0 0 25px rgba(197, 168, 128, 0.45);
+}
+
+/* Hide scrollbar utility class */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 

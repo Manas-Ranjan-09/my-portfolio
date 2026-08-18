@@ -1,8 +1,9 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Github, Linkedin, Mail, ArrowDown } from 'lucide-react';
 
 export default function Hero() {
+  const shouldReduceMotion = useReducedMotion();
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -15,7 +16,7 @@ export default function Hero() {
   };
 
   const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
+    hidden: { y: shouldReduceMotion ? 0 : 15, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
@@ -32,7 +33,7 @@ export default function Hero() {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="w-full max-w-8xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center z-10 pt-20 px-6 md:px-12"
+        className="w-full max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center z-10 pt-24 pb-12 px-4 sm:px-6 md:px-10 lg:px-0"
       >
         {/* Left Side Content (Headings/CTAs) */}
         <div className="flex flex-col items-start text-left">
@@ -47,7 +48,7 @@ export default function Hero() {
           {/* Heading */}
           <motion.h1
             variants={itemVariants}
-            className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-wide uppercase text-white leading-none mb-4"
+            className="text-[clamp(2rem,6.5vw,4.5rem)] font-extrabold tracking-wide uppercase text-white leading-[1.1] mb-4"
           >
             MANAS RANJAN
             <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-[var(--brand-gold)] via-[#cca374] to-[#f3f4f6]">
@@ -58,7 +59,7 @@ export default function Hero() {
           {/* Subtitle Role */}
           <motion.h3
             variants={itemVariants}
-            className="text-sm sm:text-lg md:text-xl font-medium tracking-[0.15em] text-[#e5e7eb] uppercase mb-6"
+            className="text-[clamp(0.8rem,1.8vw,1.15rem)] font-medium tracking-[0.15em] text-[#e5e7eb] uppercase mb-6"
           >
             FULL STACK PYTHON DEVELOPER
           </motion.h3>
@@ -80,7 +81,7 @@ export default function Hero() {
               href="#projects"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="w-full sm:w-auto px-6 md:px-8 py-3.5 bg-gradient-to-r from-[var(--brand-gold)] to-[#cca374] text-black font-semibold text-xs uppercase tracking-widest rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(197,168,128,0.3)] hover:shadow-[0_0_30px_rgba(197,168,128,0.5)] text-center whitespace-nowrap"
+              className="w-full sm:w-auto px-6 md:px-8 min-h-[48px] flex items-center justify-center bg-gradient-to-r from-[var(--brand-gold)] to-[#cca374] text-black font-semibold text-xs uppercase tracking-widest rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(197,168,128,0.3)] hover:shadow-[0_0_30px_rgba(197,168,128,0.5)] text-center whitespace-nowrap"
             >
               VIEW PROJECTS
             </motion.a>
@@ -89,7 +90,7 @@ export default function Hero() {
               download="Manas_Ranjan_Sahoo_Resume.pdf"
               whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.06)" }}
               whileTap={{ scale: 0.95 }}
-              className="w-full sm:w-auto px-6 md:px-8 py-3.5 border border-white/20 hover:border-[var(--brand-gold)] text-white font-semibold text-xs uppercase tracking-widest rounded-full bg-transparent transition-all duration-300 text-center whitespace-nowrap"
+              className="w-full sm:w-auto px-6 md:px-8 min-h-[48px] flex items-center justify-center border border-white/20 hover:border-[var(--brand-gold)] text-white font-semibold text-xs uppercase tracking-widest rounded-full bg-transparent transition-all duration-300 text-center whitespace-nowrap"
             >
               DOWNLOAD RESUME
             </motion.a>
@@ -122,6 +123,20 @@ export default function Hero() {
             >
               <Mail size={20} />
             </a>
+          </motion.div>
+
+          {/* Tagline block for mobile layout */}
+          <motion.div
+            variants={itemVariants}
+            className="flex lg:hidden flex-col gap-2 items-center border-t border-[var(--brand-gold)]/20 pt-6 mt-8 w-full text-center"
+          >
+            <span className="text-[10px] font-bold tracking-[0.25em] text-[var(--brand-gold)] uppercase mb-1">DESIGN & ARCHITECTURE</span>
+            <h4 className="text-base font-light text-white leading-normal tracking-wide">
+              Backend architecture.
+            </h4>
+            <h4 className="text-base font-light text-white leading-normal tracking-wide">
+              Frontend precision.
+            </h4>
           </motion.div>
         </div>
 

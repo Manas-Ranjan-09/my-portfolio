@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { GraduationCap, Award, BrainCircuit, Layers } from 'lucide-react';
 
 const stats = [
@@ -7,31 +7,32 @@ const stats = [
     id: 1,
     title: "MCA GRADUATE",
     desc: "Master of Computer Applications academic qualification.",
-    icon: <GraduationCap size={24} className="text-[var(--brand-gold)]" />,
+    icon: <GraduationCap className="w-[18px] h-[18px] sm:w-[24px] sm:h-[24px] text-[var(--brand-gold)]" />,
   },
   {
     id: 2,
     title: "6+ PROJECTS",
     desc: "Built diverse web, data and database applications.",
-    icon: <Award size={24} className="text-[var(--brand-gold)]" />,
+    icon: <Award className="w-[18px] h-[18px] sm:w-[24px] sm:h-[24px] text-[var(--brand-gold)]" />,
   },
   {
     id: 3,
     title: "PYTHON DEVELOPER",
     desc: "Focused on clean structures and Django/Flask applications.",
-    icon: <BrainCircuit size={24} className="text-[var(--brand-gold)]" />,
+    icon: <BrainCircuit className="w-[18px] h-[18px] sm:w-[24px] sm:h-[24px] text-[var(--brand-gold)]" />,
   },
   {
     id: 4,
     title: "FULL STACK DEV",
     desc: "Bridging solid backends with modular, reactive frontends.",
-    icon: <Layers size={24} className="text-[var(--brand-gold)]" />,
+    icon: <Layers className="w-[18px] h-[18px] sm:w-[24px] sm:h-[24px] text-[var(--brand-gold)]" />,
   },
 ];
 
 export default function About() {
+  const shouldReduceMotion = useReducedMotion();
   const cardVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 15 },
     visible: (index) => ({
       opacity: 1,
       y: 0,
@@ -46,18 +47,18 @@ export default function About() {
   return (
     <section 
       id="about" 
-      className="relative min-h-screen py-24 px-6 md:px-12 max-w-7xl mx-auto flex flex-col justify-center items-center"
+      className="relative min-h-screen py-16 sm:py-24 max-w-[1400px] mx-auto px-4 sm:px-6 md:px-10 xl:px-16 flex flex-col justify-center items-center"
     >
       <div className="w-full relative z-10">
         
         {/* Title */}
-        <div className="flex flex-col items-center mb-16 text-center">
+        <div className="flex flex-col items-center mb-12 sm:mb-16 text-center">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-3xl md:text-5xl font-extrabold tracking-widest uppercase text-white"
+            className="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-widest uppercase text-white"
           >
             ABOUT ME
           </motion.h2>
@@ -65,17 +66,17 @@ export default function About() {
         </div>
 
         {/* Layout Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-12 items-center">
           
           {/* Bio text */}
           <motion.div 
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: shouldReduceMotion ? 0 : -15 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
             className="flex flex-col gap-6"
           >
-            <h3 className="text-xl md:text-2xl font-bold tracking-wide text-white">
+            <h3 className="text-[clamp(1.15rem,2.2vw,1.5rem)] font-bold tracking-wide text-white leading-snug">
               Full Stack Developer dedicated to high-performance, robust software architectures.
             </h3>
             <p className="text-[#9ca3af] font-light leading-relaxed">
@@ -99,7 +100,7 @@ export default function About() {
           </motion.div>
 
           {/* Stats Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 mt-8 lg:mt-0">
             {stats.map((stat, index) => (
               <motion.div
                 key={stat.id}
@@ -108,18 +109,18 @@ export default function About() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                className="glass-card rounded-2xl p-6 flex flex-col justify-between min-h-[160px]"
+                className="glass-card rounded-2xl p-4 sm:p-6 flex flex-col justify-between min-h-[140px] sm:min-h-[160px]"
               >
-                <div className="flex justify-between items-start mb-4">
-                  <div className="p-3 bg-white/5 border border-white/10 rounded-xl">
+                <div className="flex justify-between items-start mb-2 sm:mb-4">
+                  <div className="p-2 sm:p-3 bg-white/5 border border-white/10 rounded-xl flex-shrink-0 flex items-center justify-center">
                     {stat.icon}
                   </div>
                 </div>
                 <div>
-                  <h4 className="text-sm font-bold tracking-widest text-[var(--brand-gold)] uppercase mb-2">
+                  <h4 className="text-[10px] sm:text-xs md:text-sm font-bold tracking-widest text-[var(--brand-gold)] uppercase mb-1 sm:mb-2">
                     {stat.title}
                   </h4>
-                  <p className="text-xs text-[#9ca3af] font-light leading-relaxed">
+                  <p className="text-[9px] min-[375px]:text-[10px] sm:text-xs text-[#9ca3af] font-light leading-relaxed">
                     {stat.desc}
                   </p>
                 </div>
